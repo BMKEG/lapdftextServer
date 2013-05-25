@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		">
+		
+   <!--
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		Properties File
+		- this is the' neuarttest.properties'
+		  file located in the ${homedir}/etc.
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	-->
+
+<!-- 
+	<bean id="testEvaluationContext" class="org.springframework.expression.spel.support.StandardEvaluationContext">
+		<property name="variables">
+			<map>
+				<entry key="homedir" value="file:#{systemProperties['user.dir']}/etc" />
+			</map>
+		</property>
+	</bean>
+ -->	
+
+	<!-- 
+		Loads property values from a list of files. Values defined in files 
+		that appear later in the 'location' list will override the ones that 
+		appear earlier. 
+	 -->
+	<context:property-placeholder 
+		ignore-resource-not-found="true"
+		location="
+			classpath:/edu/isi/bmkeg/digitalLibrary/utils/bmkegdefault.properties,
+			file:${user.dir}/src/test/resources/edu/isi/bmkeg/digitalLibrary/utils/userproperties/bmkeguser.properties,
+			file:${bmkeg.homeDirectory}/bmkeglocal.properties
+		" />
+
+<!-- 
+	<context:property-placeholder 
+		location="file:${bmkeg.userProperties}" 
+		ignore-resource-not-found="false"
+		ignore-unresolvable="true"
+		order="1"
+		/>
+ -->	
+
+	<bean id="dummyBmkegProperties" class="edu.isi.bmkeg.digitalLibrary.utils.DummyBmkegProperties">
+<!-- 
+		<property name="homeDirectory" value="#{testEvaluationContext.lookupVariable('homedir')}"/>
+ -->
+		<property name="homeDirectory" value="${bmkeg.homeDirectory}"/>
+		<property name="dbDriver" value="${bmkeg.dbDriver}"/>
+		<property name="dbUrl" value="${bmkeg.dbUrl:myDbUrl}"/>
+		<property name="dbUser" value="${bmkeg.dbUser}"/>
+		<property name="dbPassword" value="${bmkeg.dbPassword}"/>
+		<property name="persistenceUnitName" value="${bmkeg.persistenceUnitName}"/>
+	</bean>
+    		    
+</beans>

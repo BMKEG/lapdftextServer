@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+  		http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
+  		version="2.4">
+
+    <display-name>Bmkeg Server Template</display-name>
+    
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+            WEB-INF/applicationContext-daoVpdmf.xml
+            WEB-INF/applicationContext.xml
+		</param-value>
+	</context-param>
+
+	<!--  
+		Context parameter: bmkeg.propertiesfile, if present, will
+		indicate the location of the bmkeg.properties file.
+		
+		If the bmkeg.propertiesfile context parameter is not defined, the
+		location of the bmkeg.properties file will fall back to
+		1) the location specified in the bmkeg.propertiesfile VM property
+		2) the location specified in the BMKEG_PROPERTIESFILE environment variable
+		3) the ${user.home}/bmkeg/bmkeg.properties file for the user running the server
+		4) the WEB-INF/bmkefdefault.properties file
+		
+		All the properties defined in the bmkeg properties files (e.g., bmkeg.dbUrl)
+		can be overwritten in a context-param, a VM property, or an environment variable.
+	 -->
+<!-- 
+	<context-param>
+		<param-name>bmkeg.propertiesfile</param-name>
+		<param-value>
+            /Users/tallis/ISI/bmkeg/workspace-sts-2.7.2.RELEASE/digitalLibraryServer/etc/bmkeg.properties
+		</param-value>
+	</context-param>
+ -->	 
+
+	<!-- Open Entity Manager in View Pattern -->    
+<!--   	<filter>
+		<filter-name>openEntityManagerInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+   		<init-param>
+      		<param-name>entityManagerFactoryBeanName</param-name>        
+      		<param-value>entityManagerFactory</param-value>        
+   		</init-param>
+   	</filter>
+
+	<filter-mapping>
+		<filter-name>openEntityManagerInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+ -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+ 
+	<!-- Flex listeners and filters-->    
+   	<listener>
+		<listener-class>flex.messaging.HttpFlexSession</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>flex</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+    	<servlet-name>flex</servlet-name>
+    	<url-pattern>/messagebroker/*</url-pattern>
+ 	</servlet-mapping> 
+ 
+     <welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	<resources mapping="/clientApp/*.html" location="/clientApp/" />
+	
+	<servlet>
+		<servlet-name>restServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/applicationContext-rest.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>restServlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Security Listeners -->
+	<!-- Uncomment the following filter definition to restrict the 
+	 access to the web application resources to only authorized users.
+	 
+	 The Authorization rules are defined in  
+	 /edu/isi/bmkeg/utils/secured/applicationContext-secured.xml
+	 and the user properties are defined in /etc/user.properties .
+	 -->
+	<!-- 
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	 -->
+	
+</web-app>

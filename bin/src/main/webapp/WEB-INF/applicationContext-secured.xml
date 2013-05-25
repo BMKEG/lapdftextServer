@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-1.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <!--
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		Security
+		- just placeholders for now.
+		- see: http://static.springsource.org/spring-security/site/docs/3.0.x/reference/ns-config.html#ns-auth-manager
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	-->
+ 	<sec:http entry-point-ref="entrypoint">
+ 		<sec:anonymous enabled="false"/>	
+ 	</sec:http>
+ 	 	
+ 	 <bean id="entrypoint"
+ 	 		class="org.springframework.flex.security3.FlexAuthenticationEntryPoint" />
+
+    <sec:authentication-manager>
+		<sec:authentication-provider>
+			<sec:user-service id="userDetailsService" properties="#{bmkegProperties.homeDirectory}/users.properties"/>
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+</beans>

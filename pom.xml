@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.isi.bmkeg</groupId>
+	<artifactId>digLibServer</artifactId>
+	<version>0.1.2-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>edu.isi.bmkeg</groupId>
+		<artifactId>bmkeg-parent</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath>../bmkeg-parent</relativePath>
+	</parent>
+
+	<name>Digital Library Server</name>
+
+	<properties>
+		<!-- HTML Wrapper Template parameters  -->
+		<htmlwrapper.width>100%</htmlwrapper.width>
+		<htmlwrapper.height>100%</htmlwrapper.height>
+		<htmlwrapper.bgcolor>#ffffff</htmlwrapper.bgcolor>
+		<htmlwrapper.title>Triage Application</htmlwrapper.title>
+		<htmlwrapper.application>triageClientApp</htmlwrapper.application>
+		<htmlwrapper.swf>triageClientApp</htmlwrapper.swf>
+		<htmlwrapper.flashplayer.version.major>10</htmlwrapper.flashplayer.version.major>
+		<htmlwrapper.flashplayer.version.minor>2</htmlwrapper.flashplayer.version.minor>
+		<htmlwrapper.flashplayer.revision>0</htmlwrapper.flashplayer.revision>
+
+		<wrapperTemplate.dir>html-wrapper-template</wrapperTemplate.dir>
+		
+    	<flexmojos.version>4.2-beta</flexmojos.version>
+	  	<flex.version>4.5.0.20967</flex.version>
+	</properties>
+	
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+
+			<!-- 
+			
+				The following configuration is used in place of the  
+				flexmojos:wrapper goal which isn't working in the current context.
+				
+				It will copy the html wrapper resources which are contained in 
+				the ${wrapperTemplate.dir} directory into the webapp directory.
+				
+				While copying these resources it will expand the ${htmlwrapper.*} parameter
+				values (defined as properties above).
+				
+			 -->
+			<plugin>
+			    <artifactId>maven-war-plugin</artifactId>
+	            <version>2.1.1</version>	    
+			    <configuration>
+		         <nonFilteredFileExtensions>
+		            <nonFilteredFileExtension>swf</nonFilteredFileExtension>
+		            <nonFilteredFileExtension>swc</nonFilteredFileExtension>
+		          </nonFilteredFileExtensions>
+		          <webResources>
+			            <resource>
+			                <directory>${wrapperTemplate.dir}</directory>
+			                <filtering>true</filtering>
+			            </resource>
+			        </webResources>
+			   </configuration>
+			</plugin>
+			
+			<!--  
+			
+				The following plugin is used to rapidly test the webapp
+				in jetty. 
+				
+				To start a jetty server execute the command:
+				
+					mvn jetty:run-war
+					
+				This command will generate the war file and will deploy it in 
+				a jetty server (see http://jetty.codehaus.org/jetty/maven-plugin/run-war-mojo.html). 
+				  
+			 -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.16</version>
+			</plugin>
+			
+		        <!-- 
+		        
+		        	The goal copy-flex-resources is used to package a flex client
+		        	application within the webapp directory.
+		        
+		         -->
+
+		    <plugin>
+ 		        <groupId>org.sonatype.flexmojos</groupId>
+		        <artifactId>flexmojos-maven-plugin</artifactId>
+ 		        <version>${flexmojos.version}</version>
+				
+				<dependencies>
+					<dependency>
+						<groupId>com.adobe.flex</groupId>
+			            <artifactId>compiler</artifactId>
+			            <version>${flex.version}</version>
+			            <type>pom</type>						
+					</dependency>
+				</dependencies>
+				
+ 		        <executions>
+		        
+			        <execution>
+			            <goals>
+			                <goal>copy-flex-resources</goal>
+			            </goals>
+			            <configuration>
+			            	<webappDirectory>
+			            		${project.build.directory}/${project.build.finalName}
+			            	</webappDirectory>
+			            	<stripVersion>true</stripVersion>
+			            </configuration>
+			        </execution>
+			        
+		        </executions>      
+		        
+	        </plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-vpdmf</id>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>edu.isi.bmkeg</groupId>
+									<artifactId>digitalLibrary</artifactId>
+									<type>zip</type>
+									<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+									<destFileName>digitalLibrary_VPDMf.zip</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			
+			<!-- Exclude class TestUtil from the test cases -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.1</version>
+				<configuration>
+					<excludes>
+						<exclude>**/TestUtil.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+			
+		<dependency>
+			<groupId>edu.isi.bmkeg</groupId>
+			<artifactId>digitalLibrary</artifactId>
+			<version>0.1.2-SNAPSHOT</version>
+			<type>zip</type>
+		</dependency>
+
+		<!-- DAO -->
+
+		<dependency>
+			<groupId>edu.isi.bmkeg</groupId>
+			<artifactId>digitalLibraryDaoVpdmf</artifactId>
+			<version>0.1.2-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>ftd</artifactId>
+					<groupId>edu.isi.bmkeg</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ftd-jpa</artifactId>
+					<groupId>edu.isi.bmkeg</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- 		
+			Client App (in Flex) to be embedded	within the WAR file.
+			
+			The html wrapper parameters ${htmlwrapper.swf} and 
+			${htmlwrapper.application} (configured as properties 
+			above) should refer to this resource.
+		-->
+		
+		<dependency>
+			<groupId>edu.isi.bmkeg</groupId>
+			<artifactId>digitalLibrary-services</artifactId>
+			<version>0.1.2-SNAPSHOT</version>
+		</dependency>
+		
+<!-- 		<dependency>
+			<groupId>edu.isi.bmkeg</groupId>
+			<artifactId>digLibClientApp</artifactId>
+			<version>0.1.2-SNAPSHOT</version>
+			<type>swf</type>
+		</dependency> -->
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Spring Framework Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Spring Flex -->
+		<dependency>
+			<groupId>com.adobe.blazeds</groupId>
+			<artifactId>blazeds-common</artifactId>
+			<version>${blazeds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.adobe.blazeds</groupId>
+			<artifactId>blazeds-core</artifactId>
+			<version>${blazeds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.adobe.blazeds</groupId>
+			<artifactId>blazeds-remoting</artifactId>
+			<version>${blazeds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.flex</groupId>
+			<artifactId>spring-flex-core</artifactId>
+			<version>${spring-flex.version}</version>
+		</dependency>
+
+		<!-- Logging -->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Servlet -->
+
+		<dependency>
+		  <groupId>javax.servlet</groupId>
+		  <artifactId>servlet-api</artifactId>
+		  <version>2.5</version>
+		  <scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>flex-mojos-repository</id>
+      <url>http://repository.sonatype.org/content/groups/flexgroup/</url>
+	  <releases> 
+		<enabled>true</enabled> 
+	  </releases>
+      <snapshots> 
+		<enabled>true</enabled>
+	  </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+        <id>flexpmd.opensource.adobe</id>
+	    <releases>
+	        <enabled>true</enabled>
+    	    </releases>
+	    <snapshots>
+	        <enabled>false</enabled>
+	    </snapshots>
+	    <name>FlexPMD repository on opensource.adobe.com</name>
+	    <url>http://opensource.adobe.com/svn/opensource/flexpmd/maven-repository/release/</url>	
+    </pluginRepository>
+
+  </pluginRepositories>
+
+</project>

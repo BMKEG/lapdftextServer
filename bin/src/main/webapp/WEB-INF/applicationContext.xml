@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:sws="http://www.springframework.org/schema/web-services"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-1.5.xsd
+		http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<!--
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		Base Beans
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	-->
+ 
+ 	<!-- 
+		Loads property values from a list of files. Values defined in files 
+		that appear later in the 'location' list will override the ones that 
+		appear earlier. 
+		The property bmkeg.propertiesfile can be defined in a
+		servlet configuration or init parameters, in a java VM
+		property, or in the BMKEG_PROPERTIESFILE environment
+		variable.
+		
+		Notice that the properties defined within the properties
+		files (e.g., bmkeg.dbUrl) can also be redefined in a
+		servlet configuration or init parameters, in a java VM
+		property, or in an environment variable.
+	 -->
+	<context:property-placeholder 
+		ignore-resource-not-found="true"
+		location="
+			WEB-INF/bmkegdefault.properties,
+			file:${user.home}/bmkeg/bmkeg.properties,
+			file:${bmkeg.propertiesfile}
+		" />
+	
+	<bean id="bmkegProperties" class="edu.isi.bmkeg.utils.springContext.BmkegProperties">
+<!-- 
+ 		<property name="homeDirectory" value="#{evaluationContext.lookupVariable('homedir')}"/>
+ -->
+		<property name="dbDriver" value="${bmkeg.dbDriver}"/>
+		<property name="dbUrl" value="${bmkeg.dbUrl}"/>
+		<property name="dbUser" value="${bmkeg.dbUser}"/>
+		<property name="dbPassword" value="${bmkeg.dbPassword}"/>
+		<property name="persistenceUnitName" value="${bmkeg.persistenceUnitName}"/>
+	</bean>
+    
+</beans>
