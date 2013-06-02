@@ -14,16 +14,16 @@
 		<relativePath>../bmkeg-parent</relativePath>
 	</parent>
 
-	<name>Digital Library Server</name>
+	<name>LAPDF-Text Server</name>
 
 	<properties>
 		<!-- HTML Wrapper Template parameters  -->
 		<htmlwrapper.width>100%</htmlwrapper.width>
 		<htmlwrapper.height>100%</htmlwrapper.height>
 		<htmlwrapper.bgcolor>#ffffff</htmlwrapper.bgcolor>
-		<htmlwrapper.title>Triage Application</htmlwrapper.title>
-		<htmlwrapper.application>triageClientApp</htmlwrapper.application>
-		<htmlwrapper.swf>triageClientApp</htmlwrapper.swf>
+		<htmlwrapper.title>LAPDF Fragmenter</htmlwrapper.title>
+		<htmlwrapper.application>digitalLibraryClientApp</htmlwrapper.application>
+		<htmlwrapper.swf>digitalLibraryClientApp</htmlwrapper.swf>
 		<htmlwrapper.flashplayer.version.major>10</htmlwrapper.flashplayer.version.major>
 		<htmlwrapper.flashplayer.version.minor>2</htmlwrapper.flashplayer.version.minor>
 		<htmlwrapper.flashplayer.revision>0</htmlwrapper.flashplayer.revision>
@@ -165,11 +165,18 @@
 	</build>
 
 	<dependencies>
+		
+		<dependency>
+			<groupId>edu.isi.bmkeg</groupId>
+			<artifactId>vpdmfCore</artifactId>
+			<version>1.1.3-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
 			
 		<dependency>
 			<groupId>edu.isi.bmkeg</groupId>
-			<artifactId>digitalLibrary</artifactId>
-			<version>0.1.2-SNAPSHOT</version>
+			<artifactId>ftd</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
 			<type>zip</type>
 		</dependency>
 
@@ -177,18 +184,8 @@
 
 		<dependency>
 			<groupId>edu.isi.bmkeg</groupId>
-			<artifactId>digitalLibraryDaoVpdmf</artifactId>
-			<version>0.1.2-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>ftd</artifactId>
-					<groupId>edu.isi.bmkeg</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>ftd-jpa</artifactId>
-					<groupId>edu.isi.bmkeg</groupId>
-				</exclusion>
-			</exclusions>
+			<artifactId>lapdftextVpdmf</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 		
 		<!-- 		
@@ -198,19 +195,25 @@
 			${htmlwrapper.application} (configured as properties 
 			above) should refer to this resource.
 		-->
+
+		<dependency>
+			<groupId>edu.isi.bmkeg</groupId>
+			<artifactId>ftd-jpa</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>edu.isi.bmkeg</groupId>
-			<artifactId>digitalLibrary-services</artifactId>
-			<version>0.1.2-SNAPSHOT</version>
+			<artifactId>ftd-services</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
-<!-- 		<dependency>
+<!--  		<dependency>
 			<groupId>edu.isi.bmkeg</groupId>
 			<artifactId>digLibClientApp</artifactId>
-			<version>0.1.2-SNAPSHOT</version>
+			<version>0.1.3-SNAPSHOT</version>
 			<type>swf</type>
-		</dependency> -->
+		</dependency>  -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -49,7 +49,7 @@
 		<link>
 			<name>clientApp</name>
 			<type>2</type>
-			<location>/Users/gully/Documents/workspace/digLibClientAppFromTriage/bin-debug</location>
+			<location>/Users/gully/git/digitalLibraryClientApp/bin-debug</location>
 		</link>
 	</linkedResources>
 </projectDescription>

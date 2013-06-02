@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import edu.isi.bmkeg.digitalLibrary.model.qo.citations.LiteratureCitation_qo;
 import edu.isi.bmkeg.ftd.dao.FtdDao;
 import edu.isi.bmkeg.ftd.model.FTD;
 import edu.isi.bmkeg.ftd.model.qo.FTD_qo;
@@ -39,13 +38,13 @@ public class PdfServer {
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		
-		Long vpdmfId = null;
+		Long checksum = null;
 
 		Pattern patt = Pattern.compile("(\\d+)\\.swf");
 		Matcher m = patt.matcher(fileName);
 		
 		if( m.find() ) {
-			vpdmfId = new Long(m.group(1));
+			checksum = new Long(m.group(1));
 		} else {
 			responseHeaders.add("Location", "http://bmkeg.isi.edu");
 			return new ResponseEntity<byte []>(null, responseHeaders, HttpStatus.FOUND);
@@ -53,10 +52,8 @@ public class PdfServer {
 		}
 				
 		FTD_qo qFtd = new FTD_qo();
-		LiteratureCitation_qo ac = new LiteratureCitation_qo();
-		qFtd.setCitation(ac);
-		ac.setVpdmfId(vpdmfId + "");
-		List<LightViewInstance> l = this.ftdDao.listArticleDocument(qFtd);
+		qFtd.setChecksum(checksum + "");
+		List<LightViewInstance> l = this.ftdDao.listFTD(qFtd);
 		
 		if( l.size() == 0 ) {
 			responseHeaders.add("Location", "http://bmkeg.isi.edu");
@@ -70,9 +67,9 @@ public class PdfServer {
 			//return "Pubmed Id "+ pmid + " ambiguous";					
 		}
 		
-		vpdmfId = l.get(0).getVpdmfId();
+		long vpdmfId = l.get(0).getVpdmfId();
 
-		FTD ftd = this.ftdDao.findArticleDocumentById(vpdmfId);
+		FTD ftd = this.ftdDao.findFTDById(vpdmfId);
 
 		responseHeaders.setContentType(MediaType.valueOf("application/swf"));
 	    responseHeaders.setContentLength(ftd.getLaswf().length);

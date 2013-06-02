@@ -10,6 +10,6 @@
 
 	<context:annotation-config />
  
-    <context:component-scan base-package="edu.isi.bmkeg.triage.rest" />     
+    <context:component-scan base-package="edu.isi.bmkeg.digitalLibrary.rest" />     
 
 </beans>
