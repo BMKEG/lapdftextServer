@@ -1,4 +1,4 @@
-package edu.isi.bmkeg.digitalLibrary.rest;
+package edu.isi.bmkeg.lapdf.rest;
 
 import java.util.List;
 import java.util.regex.Matcher;

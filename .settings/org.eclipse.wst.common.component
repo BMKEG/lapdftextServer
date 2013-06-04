@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="digLibServer">
+    <wb-module deploy-name="lapdftextServer">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/clientApp" source-path="/clientApp"/>
-        <dependent-module archiveName="vpdmfCore-1.1.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vpdmfCore/vpdmfCore">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="uml-0.1.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/uml/uml">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="bmkeg-utils-0.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bmkeg-utils/bmkeg-utils">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="lapdftextVpdmf-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lapdftextVpdmf/lapdftextVpdmf">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="lapdftext-1.7.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lapdftext/lapdftext">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="java-output-path" value="/digLibServer/target/classes"/>
-        <property name="context-root" value="digLibServer"/>
+        <dependent-module archiveName="jsi-1.0b5-modified.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jsi/jsi">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/lapdftextServer/target/classes"/>
+        <property name="context-root" value="lapdftextServer"/>
     </wb-module>
 </project-modules>
