@@ -1,11 +1,12 @@
 lapdftextServer
 ===============
 
-A web application resource (*.war) file for the digital library client. 
+A web application resource (*.war) file for a simple client to show the block classification for a given LAPDFText rule file. 
 
 For GitHub users, we advocate the use of Maven to build and run the system from 
 the command line. This runs somewhat slowly but will execute out-of-the-box. 
 
+![Simple Screenshot](src/main/docs/screenshot1.png?raw=true)
 
 Building the system
 -------------------
