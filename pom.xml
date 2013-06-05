@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.isi.bmkeg</groupId>
-	<artifactId>digLibServer</artifactId>
-	<version>0.1.2-SNAPSHOT</version>
+	<artifactId>lapdftextServer</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<parent>
@@ -21,9 +21,9 @@
 		<htmlwrapper.width>100%</htmlwrapper.width>
 		<htmlwrapper.height>100%</htmlwrapper.height>
 		<htmlwrapper.bgcolor>#ffffff</htmlwrapper.bgcolor>
-		<htmlwrapper.title>LAPDF Fragmenter</htmlwrapper.title>
-		<htmlwrapper.application>digitalLibraryClientApp</htmlwrapper.application>
-		<htmlwrapper.swf>digitalLibraryClientApp</htmlwrapper.swf>
+		<htmlwrapper.title>LAPDFText extraction system</htmlwrapper.title>
+		<htmlwrapper.application>lapdftextClientApp</htmlwrapper.application>
+		<htmlwrapper.swf>lapdftextClientApp</htmlwrapper.swf>
 		<htmlwrapper.flashplayer.version.major>10</htmlwrapper.flashplayer.version.major>
 		<htmlwrapper.flashplayer.version.minor>2</htmlwrapper.flashplayer.version.minor>
 		<htmlwrapper.flashplayer.revision>0</htmlwrapper.flashplayer.revision>
@@ -137,18 +137,36 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>edu.isi.bmkeg</groupId>
-									<artifactId>digitalLibrary</artifactId>
+									<artifactId>ftd</artifactId>
 									<type>zip</type>
-									<outputDirectory>${project.build.outputDirectory}</outputDirectory>
-									<destFileName>digitalLibrary_VPDMf.zip</destFileName>
+									<outputDirectory>${project.build.directory}/vpdmf/edu/isi/bmkeg/lapdf</outputDirectory>
+									<destFileName>ftd_VPDMf.zip</destFileName>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			
-			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>add-resources</id>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/vpdmf</directory>
+								</resource>
+							</resources>
+						</configuration>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- Exclude class TestUtil from the test cases -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -178,6 +196,7 @@
 			<artifactId>ftd</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 			<type>zip</type>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- DAO -->
@@ -208,12 +227,12 @@
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
-<!--  		<dependency>
+  		<dependency>
 			<groupId>edu.isi.bmkeg</groupId>
-			<artifactId>digLibClientApp</artifactId>
-			<version>0.1.3-SNAPSHOT</version>
+			<artifactId>lapdftextClientApp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 			<type>swf</type>
-		</dependency>  -->
+		</dependency>  
 
 		<dependency>
 			<groupId>org.springframework</groupId>
