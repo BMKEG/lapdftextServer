@@ -16,7 +16,7 @@ this build the *.war file, but it also copies files pertaining to the
 construct the underlying database.
 
 1. Make sure you have both the `bmkeg-parent` and the `lapdftextServer` repositories as sibling directories in your workspace.
-2. run `mvn clean package`. This will perform all necessarybuild functions, including all retreiving dependencies.  
+2. run `mvn clean package`. This will perform all build functions, including retreiving all dependencies.  
 
 Running system commands
 -----------------------
