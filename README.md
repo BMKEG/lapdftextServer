@@ -29,7 +29,7 @@ populate it with PDF files.
 
 ```
 mvn exec:java -Dexec.mainClass="edu.isi.bmkeg.lapdf.bin.BuildFtdDatabase" 
-        -Dexec.args="\<db_name\> \<mysql_login\> \<mysql_password\>"        
+        -Dexec.args="<db_name> <mysql_login> <mysql_password>"        
 ``` 
 
 **Adding Rule Files**
@@ -39,7 +39,7 @@ have to be uploaded first for the command line functions to work.
 
 ```
 mvn exec:java -Dexec.mainClass="edu.isi.bmkeg.lapdf.bin.AddFTDRuleSet" 
-        -Dexec.args="\<path-to-rule-file\> \<dbName\> \<login\> \<password\>"        
+        -Dexec.args="<path-to-rule-file> <dbName> <login> <password>"        
 ``` 
 
 **Adding PDF Files**
@@ -48,7 +48,7 @@ Here is where you can iterate over large numbers of PDF files and upload them in
 
 ```
 mvn exec:java -Dexec.mainClass="edu.isi.bmkeg.lapdf.bin.AddFTD" 
-        -Dexec.args="\<path-to-pdf-file/dir\> \<dbName\> \<login\> \<password\> \[\<rule-file-name\>\]"        
+        -Dexec.args="<path-to-pdf-file/dir> <dbName> <login> <password> [<rule-file-name>]"        
 ``` 
 
 **Run Rules on Files**
@@ -57,7 +57,7 @@ Here is where you can rerun rules over the PDF files in the database already.
 
 ```
 mvn exec:java -Dexec.mainClass="edu.isi.bmkeg.lapdf.bin.RunRuleSetOnFTD" 
-        -Dexec.args="\<pdf-file-name\> \<rule-file-name\> \<dbName\> \<login\> \<password\>"        
+        -Dexec.args="<pdf-file-name> <rule-file-name> <dbName> <login> <password>"        
 ``` 
 
 Running the web-app
