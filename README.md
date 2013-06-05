@@ -70,3 +70,9 @@ mvn jetty:run-war
 ``` 
 
 **Navigate in a browser to:**  `http://localhost:8080/lapdftextServer` 
+
+Caveats
+-------
+
+* The system is based on AMF-messaging to a Java-based server which talks to an underlying MySQL database and so is a little slow in the upload / rule-file execution / download process.
+* The system runs out of the box using the maven commands as shown but is still a research prototype.
