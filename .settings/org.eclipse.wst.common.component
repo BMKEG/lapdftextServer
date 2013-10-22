@@ -6,6 +6,15 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/clientApp" source-path="/clientApp"/>
+        <dependent-module archiveName="vpdmfCore-1.1.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vpdmfCore/vpdmfCore">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="uml-0.1.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/uml/uml">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bmkeg-utils-0.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bmkeg-utils/bmkeg-utils">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="lapdftextVpdmf-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lapdftextVpdmf/lapdftextVpdmf">
             <dependency-type>uses</dependency-type>
         </dependent-module>
